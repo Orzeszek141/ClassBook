@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ClassBook.DAL.IRepositories;
+using ClassBook.DAL.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,6 +20,16 @@ public static class Extension
         using var scope = services.CreateScope();
         var dataContext = scope.ServiceProvider.GetRequiredService<MyDbContext>();
         dataContext.Database.Migrate();
+        return services;
+    }
+
+    public static IServiceCollection AddRepositories(this IServiceCollection services)
+    {
+        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IFacultyRepository, FaculltyRepository>();
+        services.AddScoped<IUserInfoRepository, UserInfoRepository>();
+        services.AddScoped<IClassRepository, ClassRepository>();
         return services;
     }
 }
