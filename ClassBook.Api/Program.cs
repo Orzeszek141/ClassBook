@@ -16,7 +16,7 @@ try
         loggerConfiguration.ReadFrom.Configuration(context.Configuration));
 
     builder.Services.AddMiddleware();
-
+    builder.Services.AddRepositories();
     // Add services to the container.
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
