@@ -1,6 +1,7 @@
 using ClassBook.Api.Extensions;
 using ClassBook.BLL.Extensions;
 using ClassBook.DAL.Extensions;
+using FluentValidation.AspNetCore;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -22,6 +23,7 @@ try
     builder.Services.AddMapper();
     // Add services to the container.
     builder.Services.AddControllers();
+    builder.Services.AddValidator();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();

@@ -1,5 +1,9 @@
-﻿using ClassBook.BLL.IServices;
+﻿using System.Reflection;
+using ClassBook.BLL.IServices;
 using ClassBook.BLL.Services;
+using ClassBook.BLL.Validators;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ClassBook.BLL.Extensions;
@@ -20,6 +24,14 @@ public static class Extension
     public static IServiceCollection AddMapper(this IServiceCollection services)
     {
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+        return services;
+    }
+
+    public static IServiceCollection AddValidator(this IServiceCollection services)
+    {
+        services.AddFluentValidationAutoValidation();
+        services.AddValidatorsFromAssemblyContaining(typeof(ClassAddValidator));
 
         return services;
     }
