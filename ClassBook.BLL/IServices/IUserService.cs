@@ -10,9 +10,9 @@ using ClassBook.Domain.Entities;
 
 namespace ClassBook.BLL.IServices;
 
-public interface IUserService : IGenericService<User, UserResponseDto, UserRequestDto>
+public interface IUserService : IGenericService<User, UserResponseDto, UserAddDto, UserUpdateDto>
 {
     Task<IEnumerable<UserResponseDto>> GetUsersSortedByLastNameAsync();
-    
     Task<UserResponseDto> GetByEmail(string email);
+    Task AddStudentToClass(int studentId, int classId);
 }

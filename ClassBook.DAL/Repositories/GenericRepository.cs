@@ -31,11 +31,11 @@ internal class GenericRepository<T> : IGenericRepository<T> where T : class
         await _table.AddAsync(obj);
     }
 
-    public async Task UpdateAsync(int id, T obj)
+    public Task UpdateAsync(T obj)
     {
-        var toChange = await _table.FindAsync(id); 
-        toChange = obj;
-        _table.Update(toChange);
+        _table.Attach(obj);
+        Context.Entry(obj).State = EntityState.Modified;
+        return Task.CompletedTask;
     }
     public async Task DeleteAsync(int id)
     {

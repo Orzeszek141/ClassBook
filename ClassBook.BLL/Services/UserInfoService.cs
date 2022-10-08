@@ -12,7 +12,7 @@ using ClassBook.Domain.Entities;
 
 namespace ClassBook.BLL.Services;
 
-internal class UserInfoService : GenericService<UserInfo, UserInfoResponseDto, UserInfoRequestDto>, IUserInfoService
+internal class UserInfoService : GenericService<UserInfo, UserInfoResponseDto, UserInfoAddDto, UserInfoUpdateDto>, IUserInfoService
 {
     private readonly IUserInfoRepository _userInfoRepository;
     public UserInfoService(IGenericRepository<UserInfo> repository, IMapper mapper, IUserInfoRepository userInfoRepository) : base(repository, mapper)

@@ -30,7 +30,7 @@ namespace ClassBook.Api.Controllers
         }
 
         [HttpPost("Add")]
-        public async Task<IActionResult> Add([FromBody] FacultyRequestDto faculty)
+        public async Task<IActionResult> Add([FromBody] FacultyAddDto faculty)
         {
             await _facultyService.AddAsync(faculty);
             return CreatedAtAction(nameof(GetAll), faculty);
@@ -43,10 +43,10 @@ namespace ClassBook.Api.Controllers
             return Ok();
         }
 
-        [HttpPatch("Update/{id:int}")]
-        public async Task<IActionResult> Update([FromBody] FacultyRequestDto faculty, [FromRoute] int id)
+        [HttpPatch("Update")]
+        public async Task<IActionResult> Update([FromBody] FacultyUpdateDto faculty)
         {
-            await _facultyService.UpdateAsync(id, faculty);
+            await _facultyService.UpdateAsync(faculty);
             return AcceptedAtAction(nameof(GetAll), faculty);
         }
 

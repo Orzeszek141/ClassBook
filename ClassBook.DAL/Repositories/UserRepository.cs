@@ -24,4 +24,11 @@ internal sealed class UserRepository : GenericRepository<User>, IUserRepository
     {
         return await Context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email);
     }
+
+    public async Task<(User,Class)> GetStudentAndClass(int studentId, int classId)
+    {
+        var user = await Context.Users.Include(x => x.Classes).FirstOrDefaultAsync(x => x.Id == studentId);
+        var clas = await Context.Classes.Include(x => x.Users).FirstOrDefaultAsync(x => x.Id == classId);
+        return (user, clas);
+    }
 }

@@ -13,7 +13,7 @@ using ClassBook.Domain.Entities;
 
 namespace ClassBook.BLL.Services;
 
-internal class UserService : GenericService<User,UserResponseDto,UserRequestDto>, IUserService
+internal class UserService : GenericService<User,UserResponseDto,UserAddDto, UserUpdateDto>, IUserService
 {
     private readonly IUserRepository _userRepository;
     public UserService(IGenericRepository<User> repository, IMapper mapper, IUserRepository userRepository) : base(repository, mapper)
@@ -31,5 +31,12 @@ internal class UserService : GenericService<User,UserResponseDto,UserRequestDto>
     {
         var user = await _userRepository.GetUserByEmail(email);
         return Mapper.Map<UserResponseDto>(user);
+    }
+
+    public async Task AddStudentToClass(int studentId, int classId)
+    {
+        var pair = await _userRepository.GetStudentAndClass(studentId,  classId);
+        pair.Item1.Classes.Add(pair.Item2);
+        await _userRepository.SaveAsync();
     }
 }

@@ -29,7 +29,7 @@ namespace ClassBook.Api.Controllers
         }
 
         [HttpPost("Add")]
-        public async Task<IActionResult> Add([FromBody] UserRequestDto user)
+        public async Task<IActionResult> Add([FromBody] UserAddDto user)
         {
             await _userService.AddAsync(user);
             return CreatedAtAction(nameof(GetAll), user);
@@ -42,10 +42,10 @@ namespace ClassBook.Api.Controllers
             return Ok();
         }
 
-        [HttpPatch("Update/{id:int}")]
-        public async Task<IActionResult> Update([FromBody] UserRequestDto user, [FromRoute] int id)
+        [HttpPatch("Update")]
+        public async Task<IActionResult> Update([FromBody] UserUpdateDto user)
         {
-            await _userService.UpdateAsync(id,user);
+            await _userService.UpdateAsync(user);
             return AcceptedAtAction(nameof(GetByEmail), new { user.Email }, user);
         }
 
@@ -59,6 +59,13 @@ namespace ClassBook.Api.Controllers
         public async Task<IEnumerable<UserResponseDto>> GetSorted()
         {
             return await _userService.GetUsersSortedByLastNameAsync();
+        }
+
+        [HttpPost("SaveToClass/{id:int}")]
+        public async Task<IActionResult> AddStudentToClass([FromRoute] int id)
+        {
+            await _userService.AddStudentToClass(16, id); 
+            return Ok();
         }
     }
 }

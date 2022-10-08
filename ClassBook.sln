@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassBook.BLL", "ClassBook.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassBook.Domain", "ClassBook.Domain\ClassBook.Domain.csproj", "{79A3D929-0F0B-4768-9A1F-3B0A52EFF0CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassBook.DAL", "ClassBook.DAL\ClassBook.DAL.csproj", "{0A0675E9-068B-40C5-86EF-3B93AD9B7DD7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassBook.DAL", "ClassBook.DAL\ClassBook.DAL.csproj", "{0A0675E9-068B-40C5-86EF-3B93AD9B7DD7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +21,8 @@ Global
 		{A3DD9625-1CE3-4454-8D8C-550F906F9DC5}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{A3DD9625-1CE3-4454-8D8C-550F906F9DC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3DD9625-1CE3-4454-8D8C-550F906F9DC5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1614017D-A7E3-487E-ACC7-E4CB42510894}.Debug|Any CPU.ActiveCfg = Release|Any CPU
-		{1614017D-A7E3-487E-ACC7-E4CB42510894}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{1614017D-A7E3-487E-ACC7-E4CB42510894}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1614017D-A7E3-487E-ACC7-E4CB42510894}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1614017D-A7E3-487E-ACC7-E4CB42510894}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1614017D-A7E3-487E-ACC7-E4CB42510894}.Release|Any CPU.Build.0 = Release|Any CPU
 		{79A3D929-0F0B-4768-9A1F-3B0A52EFF0CD}.Debug|Any CPU.ActiveCfg = Release|Any CPU

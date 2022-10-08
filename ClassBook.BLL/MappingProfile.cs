@@ -17,13 +17,20 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         CreateMap<User, UserResponseDto>();
-        CreateMap<UserRequestDto, User>();
+        CreateMap<UserAddDto, User>();
+        CreateMap<UserUpdateDto, User>();
+
         CreateMap<Class, ClassResponseDto>();
-        CreateMap<ClassRequestDto, Class>();
+        CreateMap<ClassAddDto, Class>();
+        CreateMap<ClassUpdateDto, Class>();
+
         CreateMap<Faculty, FacultyResponseDto>();
-        CreateMap<FacultyRequestDto, Faculty>();
+        CreateMap<FacultyAddDto, Faculty>();
+        CreateMap<FacultyUpdateDto, Faculty>();
+
         CreateMap<UserInfo, UserInfoResponseDto>();
-        CreateMap<UserInfoRequestDto, UserInfo>();
+        CreateMap<UserInfoAddDto, UserInfo>();
+        CreateMap<UserInfoUpdateDto, UserInfo>();
         CreateMap<UserInfo, OldestDto>();
     }
 }

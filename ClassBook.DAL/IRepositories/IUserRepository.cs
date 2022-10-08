@@ -11,4 +11,5 @@ public interface IUserRepository : IGenericRepository<User>
 {
     Task<IEnumerable<User>> GetAllUsersSortedByLastNameAsync();
     Task<User> GetUserByEmail(string email);
+    Task <(User, Class)> GetStudentAndClass(int studentId, int classId);
 }

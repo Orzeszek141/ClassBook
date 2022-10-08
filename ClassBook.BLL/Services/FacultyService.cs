@@ -12,7 +12,7 @@ using ClassBook.Domain.Entities;
 
 namespace ClassBook.BLL.Services;
 
-internal class FacultyService : GenericService<Faculty,FacultyResponseDto, FacultyRequestDto>, IFacultyService
+internal class FacultyService : GenericService<Faculty,FacultyResponseDto, FacultyAddDto, FacultyUpdateDto>, IFacultyService
 {
     private readonly IFacultyRepository _faultyRepository;
     public FacultyService(IGenericRepository<Faculty> repository, IMapper mapper, IFacultyRepository facultyRepository) : base(repository, mapper)

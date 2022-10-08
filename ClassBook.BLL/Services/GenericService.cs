@@ -11,7 +11,7 @@ using ClassBook.Domain.Entities;
 
 namespace ClassBook.BLL.Services;
 
-internal class GenericService<T, D, R> : IGenericService<T, D, R> where T : class where D : class where R : class
+internal class GenericService<T, D, A, U> : IGenericService<T, D, A, U> where T : class where D : class where A : class where U : class
 {
     internal readonly IGenericRepository<T> Repository;
     internal readonly IMapper Mapper;
@@ -34,17 +34,17 @@ internal class GenericService<T, D, R> : IGenericService<T, D, R> where T : clas
         return Mapper.Map<D>(o);
     }
 
-    public async Task AddAsync(R obj)
+    public async Task AddAsync(A obj)
     {
         var help = Mapper.Map<T>(obj);
         await Repository.InsertAsync(help);
         await Repository.SaveAsync();
     }
 
-    public async Task UpdateAsync(int id, R obj)
+    public async Task UpdateAsync(U obj)
     {
         var help = Mapper.Map<T>(obj);
-        await Repository.UpdateAsync(id, help);
+        await Repository.UpdateAsync(help);
         await Repository.SaveAsync();
     }
 
