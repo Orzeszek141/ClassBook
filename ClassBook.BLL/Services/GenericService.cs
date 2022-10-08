@@ -3,37 +3,48 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using ClassBook.BLL.IServices;
+using ClassBook.DAL;
 using ClassBook.DAL.IRepositories;
+using ClassBook.Domain.Entities;
 
 namespace ClassBook.BLL.Services;
 
-internal class GenericService<T> : IGenericService<T> where T : class
+internal class GenericService<T, D, R> : IGenericService<T, D, R> where T : class where D : class where R : class
 {
     internal readonly IGenericRepository<T> Repository;
-    public GenericService(IGenericRepository<T> repository)
+    internal readonly IMapper Mapper;
+
+    public GenericService(IGenericRepository<T> repository, IMapper mapper)
     {
         Repository = repository;
-    }
-    public async Task<IEnumerable<T>> GetAllAsync()
-    {
-        return await Repository.GetAllAsync();
+        Mapper = mapper;
     }
 
-    public async Task<T> GetByIdAsync(int id)
+    public async Task<IEnumerable<D>> GetAllAsync()
     {
-        return await Repository.GetByIdAsync(id);
+        var list = await Repository.GetAllAsync();
+        return Mapper.Map<IEnumerable<D>>(list);
     }
 
-    public async Task AddAsync(T obj)
-    { 
-        await Repository.InsertAsync(obj);
+    public async Task<D> GetByIdAsync(int id)
+    {
+        var o = await Repository.GetByIdAsync(id);
+        return Mapper.Map<D>(o);
+    }
+
+    public async Task AddAsync(R obj)
+    {
+        var help = Mapper.Map<T>(obj);
+        await Repository.InsertAsync(help);
         await Repository.SaveAsync();
     }
 
-    public async Task UpdateAsync(T obj)
+    public async Task UpdateAsync(R obj)
     {
-        await Repository.UpdateAsync(obj);
+        var help = Mapper.Map<T>(obj);
+        await Repository.UpdateAsync(help);
         await Repository.SaveAsync();
     }
 

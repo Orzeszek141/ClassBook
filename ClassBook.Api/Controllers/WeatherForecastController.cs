@@ -1,3 +1,6 @@
+using ClassBook.BLL.DTOs;
+using ClassBook.BLL.DTOs.Request;
+using ClassBook.BLL.DTOs.Response;
 using ClassBook.BLL.Exceptions;
 using ClassBook.BLL.IServices;
 using ClassBook.DAL;
@@ -17,29 +20,29 @@ public class WeatherForecastController : ControllerBase
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
 
-    private readonly IUserRepository _userRepository;
-    private  readonly IUserInfoRepository _userInfoRepository;
     private  readonly IUserService _userService;
+    private readonly IClassService _classService;
 
-    public WeatherForecastController(IUserRepository userRepository, IUserInfoRepository userInfoRepository, IUserService userService)
+    public WeatherForecastController(IClassService classService, IUserService userService)
     {
-        _userRepository = userRepository;
-        _userInfoRepository = userInfoRepository;
+        _classService = classService;
         _userService = userService;
     }
 
     [HttpPost(Name = "GetWeatherForecast")]
     public async Task<IActionResult> Post()
     {
-        var user = new User { FirstName = "Hubert", LastName = "Aaakda", Email = "Test5@o2.pl", Password = "qwerty", Role = Role.Student };
-        var userInfo = new UserInfo{BirthDate = new DateTime(2022,5,2),PhoneNumber = "9297",UserId = 1, User = user};
+        var user = new UserRequestDto("Hubert","jkkkkk","Test7@o2.pl", "qwerty",Role.Student);
+        //var userInfo = new UserInfo{BirthDate = new DateTime(2022,5,2),PhoneNumber = "9297",UserId = 1, User = user};
+        var klasa = new ClassRequestDto("A2",2,3);
+        //await _classService.AddAsync(klasa);
         //_userRepository.InsertAsync(user);
         await _userService.AddAsync(user);
         return Ok();
     }
 
     [HttpGet(Name = "Get")]
-    public Task<IEnumerable<User>> Get()
+    public async Task<IEnumerable<UserResponseDto>> Get()
     {
         //
         //_userRepository.InsertAsync(user);
@@ -49,6 +52,6 @@ public class WeatherForecastController : ControllerBase
 
         //return _userRepository.GetAllUsersSortedByLastNameAsync().Result;
         //return _userService.GetUsersSortedByLastNameAsync();
-        return _userService.GetAllAsync();
+        return await _userService.GetAllAsync();
     }
 }
