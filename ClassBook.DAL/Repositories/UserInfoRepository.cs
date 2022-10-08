@@ -20,4 +20,14 @@ internal sealed class UserInfoRepository : GenericRepository<UserInfo>, IUserInf
     {
         return await Context.UserInfos.AsNoTracking().OrderBy(x => x.BirthDate).Include(y => y.User).FirstAsync();
     }
+
+    public async Task<UserInfo> GetUserInfoByPhoneNumber(string phoneNumber)
+    {
+        return await Context.UserInfos.AsNoTracking().FirstOrDefaultAsync(x => x.PhoneNumber == phoneNumber);
+    }
+
+    public Task<bool> IsEmpty()
+    {
+        return Task.FromResult(Context.UserInfos.Any());
+    }
 }

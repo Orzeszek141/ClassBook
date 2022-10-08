@@ -19,4 +19,9 @@ internal sealed class ClassRepository : GenericRepository<Class>, IClassReposito
     {
         return await Context.Classes.AsNoTracking().Where(c => c.Floor == floor).ToListAsync();
     }
+
+    public async Task<Class> GetClassByClassNumber(string classNumber)
+    {
+        return await Context.Classes.AsNoTracking().FirstOrDefaultAsync(x => x.ClassNumber == classNumber);
+    }
 }

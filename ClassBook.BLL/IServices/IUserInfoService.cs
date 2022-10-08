@@ -9,7 +9,8 @@ using ClassBook.Domain.Entities;
 
 namespace ClassBook.BLL.IServices;
 
-public interface IUserInfoService : IGenericService<UserInfo,UserInfoResponseDto, UserInfoAddDto, UserInfoUpdateDto>
+public interface IUserInfoService : IGenericService<UserInfo,UserInfoResponseDto, UserInfoUpdateDto>
 {
     Task<OldestDto> FindAndGetTheOldestUserAsync();
+    Task AddAsync(UserInfoAddDto obj);
 }

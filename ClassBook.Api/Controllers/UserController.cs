@@ -45,7 +45,7 @@ namespace ClassBook.Api.Controllers
         [HttpPatch("Update")]
         public async Task<IActionResult> Update([FromBody] UserUpdateDto user)
         {
-            await _userService.UpdateAsync(user);
+            await _userService.UpdateAsync(user.Id,user);
             return AcceptedAtAction(nameof(GetByEmail), new { user.Email }, user);
         }
 

@@ -19,4 +19,9 @@ internal sealed class FaculltyRepository : GenericRepository<Faculty>, IFacultyR
     {
         return await Context.Faculties.AsNoTracking().Where(x => x.City == city).ToListAsync();
     }
+
+    public async Task<Faculty> GetFacultyByFacultyName(string facultyName)
+    {
+        return await Context.Faculties.AsNoTracking().FirstOrDefaultAsync(x => x.FacultyName == facultyName);
+    }
 }

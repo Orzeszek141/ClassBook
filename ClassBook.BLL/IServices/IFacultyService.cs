@@ -9,7 +9,8 @@ using ClassBook.Domain.Entities;
 
 namespace ClassBook.BLL.IServices;
 
-public interface IFacultyService : IGenericService<Faculty, FacultyResponseDto, FacultyAddDto, FacultyUpdateDto>
+public interface IFacultyService : IGenericService<Faculty, FacultyResponseDto, FacultyUpdateDto>
 {
     Task<IEnumerable<FacultyResponseDto>> GetFacultiesByCityAsync(string city);
+    Task AddAsync(FacultyAddDto obj);
 }

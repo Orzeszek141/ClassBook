@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using ClassBook.BLL.DTOs.Request;
 using ClassBook.BLL.DTOs.Response;
+using ClassBook.BLL.Exceptions;
 using ClassBook.BLL.IServices;
 using ClassBook.DAL.IRepositories;
 using ClassBook.Domain.Entities;
 
 namespace ClassBook.BLL.Services;
 
-internal class ClassService : GenericService<Class,ClassResponseDto,ClassAddDto, ClassUpdateDto>, IClassService
+internal class ClassService : GenericService<Class,ClassResponseDto, ClassUpdateDto>, IClassService
 {
     private readonly IClassRepository _classRepository;
     public ClassService(IGenericRepository<Class> repository, IMapper mapper, IClassRepository classRepository) : base(repository, mapper)
@@ -24,5 +25,15 @@ internal class ClassService : GenericService<Class,ClassResponseDto,ClassAddDto,
     {
         var classes = await _classRepository.GetAllClassesByFloorAsync(floor);
         return Mapper.Map<IEnumerable<ClassResponseDto>>(classes);
+    }
+
+    public async Task AddAsync(ClassAddDto obj)
+    {
+        if (await _classRepository.GetClassByClassNumber(obj.ClassNumber) != null)
+            throw new ClassNumberAlreadyTakenException(obj.ClassNumber);
+        var help = Mapper.Map<Class>(obj);
+
+        await _classRepository.InsertAsync(help);
+        await _classRepository.SaveAsync();
     }
 }

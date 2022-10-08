@@ -9,7 +9,8 @@ using ClassBook.Domain.Entities;
 
 namespace ClassBook.BLL.IServices;
 
-public interface IClassService : IGenericService<Class, ClassResponseDto, ClassAddDto, ClassUpdateDto>
+public interface IClassService : IGenericService<Class, ClassResponseDto, ClassUpdateDto>
 {
     Task<IEnumerable<ClassResponseDto>> GetClassesByGivenFloorAsync(int floor);
+    Task AddAsync(ClassAddDto obj);
 }

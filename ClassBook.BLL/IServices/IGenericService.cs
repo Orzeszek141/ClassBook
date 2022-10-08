@@ -1,10 +1,9 @@
 ﻿namespace ClassBook.BLL.IServices;
 
-public interface IGenericService<T, D, A, U> where T : class where D : class where A : class where U : class
+public interface IGenericService<T, D, U> where T : class where D : class where U : class
 {
     Task<IEnumerable<D>> GetAllAsync();
     Task<D> GetByIdAsync(int Id);
-    Task AddAsync(A obj);
-    Task UpdateAsync(U obj);
+    Task UpdateAsync(int id, U obj);
     Task RemoveAsync(int id);
 }

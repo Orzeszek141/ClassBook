@@ -46,7 +46,7 @@ namespace ClassBook.Api.Controllers
         [HttpPatch("Update")]
         public async Task<IActionResult> Update([FromBody] FacultyUpdateDto faculty)
         {
-            await _facultyService.UpdateAsync(faculty);
+            await _facultyService.UpdateAsync(faculty.Id, faculty);
             return AcceptedAtAction(nameof(GetAll), faculty);
         }
 
