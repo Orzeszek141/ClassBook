@@ -19,4 +19,9 @@ internal sealed class UserRepository : GenericRepository<User>, IUserRepository
     {
         return await Context.Users.AsNoTracking().OrderBy(x => x.LastName).ToListAsync();
     }
+
+    public async Task<User> GetUserByEmail(string email)
+    {
+        return await Context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email);
+    }
 }

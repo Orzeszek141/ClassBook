@@ -13,4 +13,6 @@ namespace ClassBook.BLL.IServices;
 public interface IUserService : IGenericService<User, UserResponseDto, UserRequestDto>
 {
     Task<IEnumerable<UserResponseDto>> GetUsersSortedByLastNameAsync();
+    
+    Task<UserResponseDto> GetByEmail(string email);
 }

@@ -20,9 +20,10 @@ internal class UserInfoService : GenericService<UserInfo, UserInfoResponseDto, U
         _userInfoRepository = userInfoRepository;
     }
 
-    public async Task<UserInfoResponseDto> FindAndGetTheOldestUserAsync()
+    public async Task<OldestDto> FindAndGetTheOldestUserAsync()
     {
         var oldest = await _userInfoRepository.GetTheOldestUserAsync();
-        return Mapper.Map<UserInfoResponseDto>(oldest);
+        Mapper.Map<UserResponseDto>(oldest.User);
+        return Mapper.Map<OldestDto>(oldest);
     }
 }

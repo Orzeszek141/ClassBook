@@ -10,4 +10,5 @@ namespace ClassBook.DAL.IRepositories;
 public interface IUserRepository : IGenericRepository<User>
 {
     Task<IEnumerable<User>> GetAllUsersSortedByLastNameAsync();
+    Task<User> GetUserByEmail(string email);
 }

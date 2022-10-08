@@ -41,10 +41,10 @@ internal class GenericService<T, D, R> : IGenericService<T, D, R> where T : clas
         await Repository.SaveAsync();
     }
 
-    public async Task UpdateAsync(R obj)
+    public async Task UpdateAsync(int id, R obj)
     {
         var help = Mapper.Map<T>(obj);
-        await Repository.UpdateAsync(help);
+        await Repository.UpdateAsync(id, help);
         await Repository.SaveAsync();
     }
 

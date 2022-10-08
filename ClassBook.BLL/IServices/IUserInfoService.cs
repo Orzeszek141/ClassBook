@@ -11,5 +11,5 @@ namespace ClassBook.BLL.IServices;
 
 public interface IUserInfoService : IGenericService<UserInfo,UserInfoResponseDto, UserInfoRequestDto>
 {
-    Task<UserInfoResponseDto> FindAndGetTheOldestUserAsync();
+    Task<OldestDto> FindAndGetTheOldestUserAsync();
 }

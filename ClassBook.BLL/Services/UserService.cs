@@ -26,4 +26,10 @@ internal class UserService : GenericService<User,UserResponseDto,UserRequestDto>
         var users = await _userRepository.GetAllUsersSortedByLastNameAsync();
         return Mapper.Map<IEnumerable<UserResponseDto>>(users);
     }
+
+    public async Task<UserResponseDto> GetByEmail(string email)
+    {
+        var user = await _userRepository.GetUserByEmail(email);
+        return Mapper.Map<UserResponseDto>(user);
+    }
 }

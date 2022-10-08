@@ -18,6 +18,6 @@ internal sealed class UserInfoRepository : GenericRepository<UserInfo>, IUserInf
 
     public async Task<UserInfo> GetTheOldestUserAsync()
     {
-        return await Context.UserInfos.AsNoTracking().OrderByDescending(x => x.BirthDate).Include(y => y.User).FirstAsync();
+        return await Context.UserInfos.AsNoTracking().OrderBy(x => x.BirthDate).Include(y => y.User).FirstAsync();
     }
 }

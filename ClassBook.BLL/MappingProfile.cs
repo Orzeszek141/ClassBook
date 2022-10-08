@@ -22,7 +22,8 @@ public class MappingProfile : Profile
         CreateMap<ClassRequestDto, Class>();
         CreateMap<Faculty, FacultyResponseDto>();
         CreateMap<FacultyRequestDto, Faculty>();
-        CreateMap<UserInfo, UserResponseDto>();
-        CreateMap<UserRequestDto, UserInfo>();
+        CreateMap<UserInfo, UserInfoResponseDto>();
+        CreateMap<UserInfoRequestDto, UserInfo>();
+        CreateMap<UserInfo, OldestDto>();
     }
 }
