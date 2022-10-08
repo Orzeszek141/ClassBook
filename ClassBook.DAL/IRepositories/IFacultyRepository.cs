@@ -5,10 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ClassBook.Domain.Entities;
 
-namespace ClassBook.DAL.IRepositories
+namespace ClassBook.DAL.IRepositories;
+
+public interface IFacultyRepository : IGenericRepository<Faculty>
 {
-    public interface IFacultyRepository : IGenericRepository<Faculty>
-    {
-        Task<IEnumerable<Faculty>> GetAllFacultiesByCityAsync(string city);
-    }
+    Task<IEnumerable<Faculty>> GetAllFacultiesByCityAsync(string city);
 }

@@ -5,10 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ClassBook.Domain.Entities;
 
-namespace ClassBook.DAL.IRepositories
+namespace ClassBook.DAL.IRepositories;
+
+public interface IUserRepository : IGenericRepository<User>
 {
-    public interface IUserRepository : IGenericRepository<User>
-    {
-        Task<IEnumerable<User>> GetAllUsersSortedByLastNameAsync();
-    }
+    Task<IEnumerable<User>> GetAllUsersSortedByLastNameAsync();
 }

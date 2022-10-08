@@ -7,17 +7,16 @@ using ClassBook.DAL.IRepositories;
 using ClassBook.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace ClassBook.DAL.Repositories
-{
-    internal sealed class UserRepository : GenericRepository<User>, IUserRepository
-    {
-        public UserRepository(MyDbContext context) : base(context)
-        {
-        }
+namespace ClassBook.DAL.Repositories;
 
-        public async Task<IEnumerable<User>> GetAllUsersSortedByLastNameAsync()
-        {
-            return await Context.Users.AsNoTracking().OrderBy(x => x.LastName).ToListAsync();
-        }
+internal sealed class UserRepository : GenericRepository<User>, IUserRepository
+{
+    public UserRepository(MyDbContext context) : base(context)
+    {
+    }
+
+    public async Task<IEnumerable<User>> GetAllUsersSortedByLastNameAsync()
+    {
+        return await Context.Users.AsNoTracking().OrderBy(x => x.LastName).ToListAsync();
     }
 }

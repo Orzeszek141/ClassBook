@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassBook.DAL.IRepositories
+namespace ClassBook.DAL.IRepositories;
+
+public interface IGenericRepository<T> where T : class
 {
-    public interface IGenericRepository<T> where T : class
-    {
-        Task<IEnumerable<T>> GetAllAsync();
-        Task<T> GetByIdAsync(object id);
-        Task InsertAsync(T obj);
-        Task DeleteAsync(object id);
-        Task SaveAsync();
-    }
+    Task<IEnumerable<T>> GetAllAsync();
+    Task<T> GetByIdAsync(int id);
+    Task InsertAsync(T obj);
+    Task UpdateAsync(T obj);
+    Task DeleteAsync(int id);
+    Task SaveAsync();
 }

@@ -5,10 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ClassBook.Domain.Entities;
 
-namespace ClassBook.DAL.IRepositories
+namespace ClassBook.DAL.IRepositories;
+
+public interface IClassRepository : IGenericRepository<Class>
 {
-    public interface IClassRepository : IGenericRepository<Class>
-    {
-        Task<IEnumerable<Class>> GetAllClassesByFloorAsync(int floor);
-    }
+    Task<IEnumerable<Class>> GetAllClassesByFloorAsync(int floor);
 }

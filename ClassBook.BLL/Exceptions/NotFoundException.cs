@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassBook.BLL.Exceptions
+namespace ClassBook.BLL.Exceptions;
+
+public class NotFoundException : CustomException
 {
-    public class NotFoundException : CustomException
+    public NotFoundException(string message) : base(message)
     {
-        public NotFoundException(string message) : base(message)
-        {
-        }
     }
 }

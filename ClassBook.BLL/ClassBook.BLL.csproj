@@ -10,4 +10,8 @@
     <ProjectReference Include="..\ClassBook.DAL\ClassBook.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
 </Project>

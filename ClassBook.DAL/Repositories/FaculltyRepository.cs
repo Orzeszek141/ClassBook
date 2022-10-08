@@ -7,17 +7,16 @@ using ClassBook.DAL.IRepositories;
 using ClassBook.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace ClassBook.DAL.Repositories
-{
-    internal sealed class FaculltyRepository : GenericRepository<Faculty>, IFacultyRepository 
-    {
-        public FaculltyRepository(MyDbContext context) : base(context)
-        {
-        }
+namespace ClassBook.DAL.Repositories;
 
-        public async Task<IEnumerable<Faculty>> GetAllFacultiesByCityAsync(string city)
-        {
-            return await Context.Faculties.AsNoTracking().Where(x => x.City == city).ToListAsync();
-        }
+internal sealed class FaculltyRepository : GenericRepository<Faculty>, IFacultyRepository 
+{
+    public FaculltyRepository(MyDbContext context) : base(context)
+    {
+    }
+
+    public async Task<IEnumerable<Faculty>> GetAllFacultiesByCityAsync(string city)
+    {
+        return await Context.Faculties.AsNoTracking().Where(x => x.City == city).ToListAsync();
     }
 }

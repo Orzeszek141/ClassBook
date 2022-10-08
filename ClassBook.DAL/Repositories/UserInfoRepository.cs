@@ -8,17 +8,16 @@ using ClassBook.DAL.IRepositories;
 using ClassBook.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace ClassBook.DAL.Repositories
-{
-    internal sealed class UserInfoRepository : GenericRepository<UserInfo>, IUserInfoRepository
-    {
-        public UserInfoRepository(MyDbContext context) : base(context)
-        {
-        }
+namespace ClassBook.DAL.Repositories;
 
-        public async Task<UserInfo> FindTheOldestUserAsync()
-        {
-            return await Context.UserInfos.AsNoTracking().OrderByDescending(x => x.BirthDate).Include(y => y.User).FirstAsync();
-        }
+internal sealed class UserInfoRepository : GenericRepository<UserInfo>, IUserInfoRepository
+{
+    public UserInfoRepository(MyDbContext context) : base(context)
+    {
+    }
+
+    public async Task<UserInfo> GetTheOldestUserAsync()
+    {
+        return await Context.UserInfos.AsNoTracking().OrderByDescending(x => x.BirthDate).Include(y => y.User).FirstAsync();
     }
 }

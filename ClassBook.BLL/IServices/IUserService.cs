@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ClassBook.Domain.Entities;
 
-namespace ClassBook.DAL.IRepositories;
+namespace ClassBook.BLL.IServices;
 
-public interface IUserInfoRepository : IGenericRepository<UserInfo>
+public interface IUserService : IGenericService<User>
 {
-    Task<UserInfo> GetTheOldestUserAsync();
+    Task<IEnumerable<User>> GetUsersSortedByLastNameAsync();
 }

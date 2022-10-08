@@ -20,6 +20,7 @@ public static class Extension
         using var scope = services.CreateScope();
         var dataContext = scope.ServiceProvider.GetRequiredService<MyDbContext>();
         dataContext.Database.Migrate();
+
         return services;
     }
 
@@ -30,6 +31,7 @@ public static class Extension
         services.AddScoped<IFacultyRepository, FaculltyRepository>();
         services.AddScoped<IUserInfoRepository, UserInfoRepository>();
         services.AddScoped<IClassRepository, ClassRepository>();
+
         return services;
     }
 }
