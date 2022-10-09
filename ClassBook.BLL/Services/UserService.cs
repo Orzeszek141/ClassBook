@@ -62,6 +62,19 @@ internal class UserService : GenericService<User,UserResponseDto, UserUpdateDto>
         await _userRepository.SaveAsync();
     }
 
+    public new async Task UpdateAsync(int id, UserUpdateDto obj)
+    {
+        var o = await Repository.GetByIdAsync(id);
+
+        if (o == null)
+            throw new NotFoundException();
+
+        var help = Mapper.Map<User>(obj);
+        help.Password = _passwordHasher.HashPassword(obj.Password);
+        await Repository.UpdateAsync(help);
+        await Repository.SaveAsync();
+    }
+
     public async Task<TokenDto> Login(LoginDto obj, string key)
     {
         var user = await _userRepository.GetUserByEmail(obj.Email);

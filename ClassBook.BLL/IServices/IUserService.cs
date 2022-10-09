@@ -17,4 +17,5 @@ public interface IUserService : IGenericService<User, UserResponseDto, UserUpdat
     Task AddStudentToClass(string studentEmail, int classId);
     Task AddAsync(UserAddDto obj);
     Task<TokenDto> Login(LoginDto obj, string key);
+    new Task UpdateAsync(int id, UserUpdateDto obj);
 }

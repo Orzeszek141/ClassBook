@@ -4,6 +4,8 @@ using ClassBook.Api.Middlewares;
 using ClassBook.Domain.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ClassBook.Api.Extensions;
@@ -53,5 +55,14 @@ public static class Extension
         app.UseAuthorization();
 
         return app;
+    }
+
+    public static IServiceCollection AddClaims(this IServiceCollection service)
+    {
+        service.AddHttpContextAccessor();
+        service.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
+        service.AddSingleton<GetUserClaim>();
+
+        return service;
     }
 }

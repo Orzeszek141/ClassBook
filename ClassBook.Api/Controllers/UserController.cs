@@ -1,4 +1,5 @@
-﻿using ClassBook.Api.Middlewares;
+﻿using ClassBook.Api.Authorization;
+using ClassBook.Api.Middlewares;
 using ClassBook.BLL.DTOs.Request;
 using ClassBook.BLL.DTOs.Response;
 using ClassBook.BLL.IServices;
@@ -16,10 +17,11 @@ namespace ClassBook.Api.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-
-        public UserController(IUserService userService)
+        private readonly GetUserClaim _getUserClaim;
+        public UserController(IUserService userService, GetUserClaim getUserClaim)
         {
             _userService = userService;
+            _getUserClaim = getUserClaim;
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -86,7 +88,8 @@ namespace ClassBook.Api.Controllers
         [HttpPost("SaveToClass/{id:int}")]
         public async Task<IActionResult> AddStudentToClass([FromRoute] int id)
         {
-            await _userService.AddStudentToClass("string", id); 
+
+            await _userService.AddStudentToClass(_getUserClaim.GetEmail(), id); 
             return Ok();
         }
     }

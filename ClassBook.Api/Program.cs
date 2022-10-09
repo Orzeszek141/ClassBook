@@ -32,6 +32,8 @@ try
     builder.Services.AddMyDbContext(builder.Configuration);
     builder.Services.AddAuth(builder.Configuration);
 
+    builder.Services.AddClaims();
+
     var app = builder.Build();
 
     AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
