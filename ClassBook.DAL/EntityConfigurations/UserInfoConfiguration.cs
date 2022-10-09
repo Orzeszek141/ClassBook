@@ -15,6 +15,7 @@ internal class UserInfoConfiguration : IEntityTypeConfiguration<UserInfo>
     {
         //Properties
         builder.HasKey(x => x.Id);
+        builder.HasIndex(b => b.PhoneNumber).IsUnique();
         builder.Property(x => x.PhoneNumber).HasMaxLength(9).IsRequired();
         builder.Property(x => x.BirthDate).IsRequired();
     }

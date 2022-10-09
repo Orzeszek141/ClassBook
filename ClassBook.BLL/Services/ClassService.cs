@@ -29,8 +29,13 @@ internal class ClassService : GenericService<Class,ClassResponseDto, ClassUpdate
 
     public async Task AddAsync(ClassAddDto obj)
     {
-        if (await _classRepository.GetClassByClassNumber(obj.ClassNumber) != null)
+        var classes = _classRepository.GetAllClassesByFloorAsync(obj.FacultyId).Result;
+
+        if (classes.Any(x => x.ClassNumber != obj.ClassNumber))
+        {
             throw new ClassNumberAlreadyTakenException(obj.ClassNumber);
+        }
+
         var help = Mapper.Map<Class>(obj);
 
         await _classRepository.InsertAsync(help);

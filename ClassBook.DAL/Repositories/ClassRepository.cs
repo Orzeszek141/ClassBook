@@ -24,4 +24,9 @@ internal sealed class ClassRepository : GenericRepository<Class>, IClassReposito
     {
         return await Context.Classes.AsNoTracking().FirstOrDefaultAsync(x => x.ClassNumber == classNumber);
     }
+
+    public Task<IEnumerable<Class>> GetClassesByFacultyId(int facultyId)
+    {
+        return Task.FromResult(Context.Classes.AsNoTracking().Where(x => x.FacultyId == facultyId).AsEnumerable());
+    }
 }
