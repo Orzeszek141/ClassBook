@@ -1,5 +1,6 @@
 using ClassBook.Api.Extensions;
 using ClassBook.BLL.Extensions;
+using ClassBook.DAL;
 using ClassBook.DAL.Extensions;
 using FluentValidation.AspNetCore;
 using Serilog;
@@ -29,13 +30,21 @@ try
     builder.Services.AddSwaggerGen();
 
     builder.Services.AddMyDbContext(builder.Configuration);
-
     builder.Services.AddAuth(builder.Configuration);
 
     var app = builder.Build();
 
+    AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
     app.UseMiddleware();
     app.Services.PerformDatabaseUpdate();
+
+    using (var scope = app.Services.CreateScope())
+    {
+        var services = scope.ServiceProvider;
+        var context = services.GetService<MyDbContext>();
+        Seeder.SeedData(context);
+    }
 
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())

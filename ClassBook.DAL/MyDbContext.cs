@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ClassBook.DAL.EntityConfigurations;
+using ClassBook.DAL.Fakers;
 using Microsoft.EntityFrameworkCore;
 using ClassBook.Domain.Entities;
 

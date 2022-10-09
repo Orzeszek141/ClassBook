@@ -33,6 +33,7 @@ internal class GenericRepository<T> : IGenericRepository<T> where T : class
 
     public Task UpdateAsync(T obj)
     {
+        Context.ChangeTracker.Clear();
         _table.Attach(obj);
         Context.Entry(obj).State = EntityState.Modified;
         return Task.CompletedTask;
