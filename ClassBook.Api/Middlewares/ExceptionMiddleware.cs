@@ -36,6 +36,4 @@ internal sealed class ExceptionMiddleware : IMiddleware
         httpContext.Response.StatusCode = statusCode;
         await httpContext.Response.WriteAsJsonAsync(error);
     }
-
-    private record ErrorDto(string StatusCode, string Description);
 }
