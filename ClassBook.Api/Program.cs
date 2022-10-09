@@ -30,6 +30,8 @@ try
 
     builder.Services.AddMyDbContext(builder.Configuration);
 
+    builder.Services.AddAuth(builder.Configuration);
+
     var app = builder.Build();
 
     app.UseMiddleware();
@@ -44,7 +46,7 @@ try
 
     app.UseHttpsRedirection();
 
-    app.UseAuthorization();
+    app.UseAuth();
 
     app.MapControllers();
 

@@ -1,4 +1,8 @@
-﻿using ClassBook.Api.Middlewares;
+﻿using System.Text;
+using ClassBook.Api.Authorization;
+using ClassBook.Api.Middlewares;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ClassBook.Api.Extensions;
 
@@ -15,6 +19,35 @@ public static class Extension
     {
         app.UseMiddleware<ExceptionMiddleware>();
             
+        return app;
+    }
+
+    public static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.Configure<JwtKey>(configuration.GetSection("JwtKey"));
+
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(o =>
+        {
+            o.TokenValidationParameters = new TokenValidationParameters
+            {
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtKey:Key"])),
+            };
+        });
+        services.AddAuthorization();
+
+        return services;
+    }
+
+    public static WebApplication UseAuth(this WebApplication app)
+    {
+        app.UseAuthentication();
+        app.UseAuthorization();
+
         return app;
     }
 }

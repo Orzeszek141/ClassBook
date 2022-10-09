@@ -12,7 +12,7 @@ public class NotFoundException : CustomException
     {
     }
 
-    public NotFoundException(string email) : base($"User for given {email} does not exist")
+    public NotFoundException(string email) : base($"User for given email: {email} does not exist")
     {
     }
 }

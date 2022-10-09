@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using ClassBook.BLL.Authorization;
 using ClassBook.BLL.DTOs;
 using ClassBook.BLL.DTOs.Request;
 using ClassBook.BLL.DTOs.Response;
@@ -54,5 +55,18 @@ internal class UserService : GenericService<User,UserResponseDto, UserUpdateDto>
 
         await _userRepository.InsertAsync(help);
         await _userRepository.SaveAsync();
+    }
+
+    public async Task<TokenDto> Login(LoginDto obj, string key)
+    {
+        var user = await _userRepository.GetUserByEmail(obj.Email);
+        if (user == null)
+            throw new NotFoundException(obj.Email);
+        else if (user.Password != obj.Password)
+            throw new WrongPasswordException();
+
+        var tokenDescriptor = TokenHandler.GenerateTokenDescriptor(user,key);
+
+        return TokenGenerator.GetToken(tokenDescriptor);
     }
 }
