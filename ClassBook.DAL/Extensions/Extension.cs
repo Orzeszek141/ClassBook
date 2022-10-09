@@ -10,7 +10,8 @@ public static class Extension
 {
     public static IServiceCollection AddMyDbContext(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<MyDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("PostgresConnection")));
+        services.AddDbContext<MyDbContext>(options =>
+            options.UseNpgsql(configuration.GetConnectionString("PostgresConnection")));
 
         return services;
     }

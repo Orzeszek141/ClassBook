@@ -30,7 +30,8 @@ internal sealed class ExceptionMiddleware : IMiddleware
         {
             CustomException => (StatusCodes.Status400BadRequest,
                 new ErrorDto(StatusCodes.Status400BadRequest.ToString(), exception.Message)),
-            _ => (StatusCodes.Status500InternalServerError, new ErrorDto(StatusCodes.Status500InternalServerError.ToString(), "Internal Server error."))
+            _ => (StatusCodes.Status500InternalServerError,
+                new ErrorDto(StatusCodes.Status500InternalServerError.ToString(), "Internal Server error."))
         };
 
         httpContext.Response.StatusCode = statusCode;

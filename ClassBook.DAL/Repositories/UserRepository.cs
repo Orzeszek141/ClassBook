@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ClassBook.DAL.IRepositories;
+﻿using ClassBook.DAL.IRepositories;
 using ClassBook.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,10 +20,11 @@ internal sealed class UserRepository : GenericRepository<User>, IUserRepository
         return await Context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email);
     }
 
-    public async Task<(User,Class)> GetStudentAndClass(string studentEmail, int classId)
+    public async Task<(User, Class)> GetStudentAndClass(string studentEmail, int classId)
     {
         var user = await Context.Users.Include(x => x.Classes).FirstOrDefaultAsync(x => x.Email == studentEmail);
         var clas = await Context.Classes.Include(x => x.Users).FirstOrDefaultAsync(x => x.Id == classId);
+
         return (user, clas);
     }
 }

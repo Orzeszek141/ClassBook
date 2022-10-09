@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using ClassBook.BLL.DTOs;
+﻿using AutoMapper;
 using ClassBook.BLL.DTOs.Request;
 using ClassBook.BLL.DTOs.Response;
-using ClassBook.DAL.IRepositories;
 using ClassBook.Domain.Entities;
 
 namespace ClassBook.BLL;

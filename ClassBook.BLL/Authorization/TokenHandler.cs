@@ -1,8 +1,6 @@
 ﻿using System.Security.Claims;
 using System.Text;
 using ClassBook.Domain.Entities;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ClassBook.BLL.Authorization;
@@ -16,11 +14,12 @@ public static class TokenHandler
         {
             Subject = new ClaimsIdentity(new[]
             {
-                new Claim(ClaimTypes.Role.ToString(), user.Role.ToString()),
-                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
+                new Claim(ClaimTypes.Email, user.Email)
             }),
             Expires = DateTime.UtcNow.AddHours(1),
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
+            SigningCredentials =
+                new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
         };
 
 

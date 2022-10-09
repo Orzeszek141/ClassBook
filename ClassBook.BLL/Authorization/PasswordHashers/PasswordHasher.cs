@@ -2,7 +2,13 @@
 
 internal sealed class PasswordHasher : IPasswordHasher
 {
-    public string HashPassword(string password) => BCrypt.Net.BCrypt.HashPassword(password);
+    public string HashPassword(string password)
+    {
+        return BCrypt.Net.BCrypt.HashPassword(password);
+    }
 
-    public bool VerifyPassword(string givenPassword, string passwordHash) => BCrypt.Net.BCrypt.Verify(givenPassword, passwordHash);
+    public bool VerifyPassword(string givenPassword, string passwordHash)
+    {
+        return BCrypt.Net.BCrypt.Verify(givenPassword, passwordHash);
+    }
 }

@@ -1,9 +1,7 @@
 ﻿using System.Text;
 using ClassBook.Api.Authorization;
 using ClassBook.Api.Middlewares;
-using ClassBook.Domain.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
@@ -22,7 +20,7 @@ public static class Extension
     public static WebApplication UseMiddleware(this WebApplication app)
     {
         app.UseMiddleware<ExceptionMiddleware>();
-            
+
         return app;
     }
 

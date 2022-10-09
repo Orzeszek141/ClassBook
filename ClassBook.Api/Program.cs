@@ -2,7 +2,6 @@ using ClassBook.Api.Extensions;
 using ClassBook.BLL.Extensions;
 using ClassBook.DAL;
 using ClassBook.DAL.Extensions;
-using FluentValidation.AspNetCore;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -70,4 +69,3 @@ finally
     Log.Information("Shut down complete");
     Log.CloseAndFlush();
 }
-

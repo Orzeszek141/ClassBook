@@ -6,91 +6,94 @@ using ClassBook.BLL.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ClassBook.Api.Controllers
+namespace ClassBook.Api.Controllers;
+
+[ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
+[ProducesResponseType(typeof(ErrorDto), StatusCodes.Status401Unauthorized)]
+[ProducesResponseType(typeof(ErrorDto), StatusCodes.Status403Forbidden)]
+[ProducesResponseType(typeof(ErrorDto), StatusCodes.Status500InternalServerError)]
+[ApiController]
+[Route("api/[controller]")]
+public class UserController : ControllerBase
 {
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status500InternalServerError)]
-    [ApiController]
-    [Route("api/[controller]")]
-    public class UserController : ControllerBase
+    private readonly GetUserClaim _getUserClaim;
+    private readonly IUserService _userService;
+
+    public UserController(IUserService userService, GetUserClaim getUserClaim)
     {
-        private readonly IUserService _userService;
-        private readonly GetUserClaim _getUserClaim;
-        public UserController(IUserService userService, GetUserClaim getUserClaim)
-        {
-            _userService = userService;
-            _getUserClaim = getUserClaim;
-        }
+        _userService = userService;
+        _getUserClaim = getUserClaim;
+    }
 
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [AllowAnonymous]
-        [HttpGet("GetAll")]
-        public async Task<IEnumerable<UserResponseDto>> GetAll()
-        {
-            return await _userService.GetAllAsync();
-        }
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [AllowAnonymous]
+    [HttpGet("GetAll")]
+    public async Task<IEnumerable<UserResponseDto>> GetAll()
+    {
+        return await _userService.GetAllAsync();
+    }
 
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [Authorize(Roles = "Teacher, Student")]
-        [HttpGet("GetById/{id:int}")]
-        public async Task<UserResponseDto> GetById([FromRoute] int id)
-        {
-            return await _userService.GetByIdAsync(id);
-        }
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [Authorize(Roles = "Teacher, Student")]
+    [HttpGet("GetById/{id:int}")]
+    public async Task<UserResponseDto> GetById([FromRoute] int id)
+    {
+        return await _userService.GetByIdAsync(id);
+    }
 
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [Authorize(Roles = "Teacher")]
-        [HttpPost("Add")]
-        public async Task<IActionResult> Add([FromBody] UserAddDto user)
-        {
-            await _userService.AddAsync(user);
-            return CreatedAtAction(nameof(GetAll), user);
-        }
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [Authorize(Roles = "Teacher")]
+    [HttpPost("Add")]
+    public async Task<IActionResult> Add([FromBody] UserAddDto user)
+    {
+        await _userService.AddAsync(user);
 
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [Authorize(Roles = "Teacher")]
-        [HttpDelete("Delete/{id:int}")]
-        public async Task<IActionResult> Delete([FromRoute] int id)
-        {
-            await _userService.RemoveAsync(id);
-            return Ok();
-        }
+        return CreatedAtAction(nameof(GetAll), user);
+    }
 
-        [ProducesResponseType(StatusCodes.Status202Accepted)]
-        [Authorize(Roles = "Teacher")]
-        [HttpPatch("Update")]
-        public async Task<IActionResult> Update([FromBody] UserUpdateDto user)
-        {
-            await _userService.UpdateAsync(user.Id,user);
-            return AcceptedAtAction(nameof(GetByEmail), new { user.Email }, user);
-        }
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [Authorize(Roles = "Teacher")]
+    [HttpDelete("Delete/{id:int}")]
+    public async Task<IActionResult> Delete([FromRoute] int id)
+    {
+        await _userService.RemoveAsync(id);
 
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [Authorize(Roles = "Teacher, Student")]
-        [HttpGet("GetByEmail/{email}")]
-        public async Task<UserResponseDto> GetByEmail([FromRoute] string email)
-        {
-            return await _userService.GetByEmail(email);
-        }
+        return Ok();
+    }
 
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [Authorize(Roles = "Teacher, Student")]
-        [HttpGet("GetSortedByLastNameAsync")]
-        public async Task<IEnumerable<UserResponseDto>> GetSorted()
-        {
-            return await _userService.GetUsersSortedByLastNameAsync();
-        }
+    [ProducesResponseType(StatusCodes.Status202Accepted)]
+    [Authorize(Roles = "Teacher")]
+    [HttpPatch("Update")]
+    public async Task<IActionResult> Update([FromBody] UserUpdateDto user)
+    {
+        await _userService.UpdateAsync(user.Id, user);
 
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [Authorize]
-        [HttpPost("SaveToClass/{id:int}")]
-        public async Task<IActionResult> AddStudentToClass([FromRoute] int id)
-        {
+        return AcceptedAtAction(nameof(GetByEmail), new { user.Email }, user);
+    }
 
-            await _userService.AddStudentToClass(_getUserClaim.GetEmail(), id); 
-            return Ok();
-        }
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [Authorize(Roles = "Teacher, Student")]
+    [HttpGet("GetByEmail/{email}")]
+    public async Task<UserResponseDto> GetByEmail([FromRoute] string email)
+    {
+        return await _userService.GetByEmail(email);
+    }
+
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [Authorize(Roles = "Teacher, Student")]
+    [HttpGet("GetSortedByLastNameAsync")]
+    public async Task<IEnumerable<UserResponseDto>> GetSorted()
+    {
+        return await _userService.GetUsersSortedByLastNameAsync();
+    }
+
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [Authorize]
+    [HttpPost("SaveToClass/{id:int}")]
+    public async Task<IActionResult> AddStudentToClass([FromRoute] int id)
+    {
+        await _userService.AddStudentToClass(_getUserClaim.GetEmail(), id);
+
+        return Ok();
     }
 }

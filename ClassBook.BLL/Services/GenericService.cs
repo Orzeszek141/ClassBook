@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using ClassBook.BLL.Exceptions;
 using ClassBook.BLL.IServices;
-using ClassBook.DAL;
 using ClassBook.DAL.IRepositories;
-using ClassBook.Domain.Entities;
 
 namespace ClassBook.BLL.Services;
 
 internal class GenericService<T, D, U> : IGenericService<T, D, U> where T : class where D : class where U : class
 {
-    internal readonly IGenericRepository<T> Repository;
     internal readonly IMapper Mapper;
+    internal readonly IGenericRepository<T> Repository;
 
     public GenericService(IGenericRepository<T> repository, IMapper mapper)
     {
@@ -48,6 +41,7 @@ internal class GenericService<T, D, U> : IGenericService<T, D, U> where T : clas
             throw new NotFoundException();
 
         var help = Mapper.Map<T>(obj);
+
         await Repository.UpdateAsync(help);
         await Repository.SaveAsync();
     }

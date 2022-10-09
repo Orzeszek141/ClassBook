@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using ClassBook.BLL.DTOs.Request;
 using ClassBook.BLL.DTOs.Response;
 using ClassBook.BLL.Exceptions;
@@ -16,7 +11,9 @@ namespace ClassBook.BLL.Services;
 internal class UserInfoService : GenericService<UserInfo, UserInfoResponseDto, UserInfoUpdateDto>, IUserInfoService
 {
     private readonly IUserInfoRepository _userInfoRepository;
-    public UserInfoService(IGenericRepository<UserInfo> repository, IMapper mapper, IUserInfoRepository userInfoRepository) : base(repository, mapper)
+
+    public UserInfoService(IGenericRepository<UserInfo> repository, IMapper mapper,
+        IUserInfoRepository userInfoRepository) : base(repository, mapper)
     {
         _userInfoRepository = userInfoRepository;
     }
@@ -25,7 +22,9 @@ internal class UserInfoService : GenericService<UserInfo, UserInfoResponseDto, U
     {
         if (!_userInfoRepository.IsEmpty().Result)
             throw new NoContentFoundException();
+
         var oldest = await _userInfoRepository.GetTheOldestUserAsync();
+
         Mapper.Map<UserResponseDto>(oldest.User);
         return Mapper.Map<OldestDto>(oldest);
     }
@@ -34,6 +33,7 @@ internal class UserInfoService : GenericService<UserInfo, UserInfoResponseDto, U
     {
         if (await _userInfoRepository.GetUserInfoByPhoneNumber(obj.PhoneNumber) != null)
             throw new PhoneNumberAlreadyTakenException(obj.PhoneNumber);
+
         var help = Mapper.Map<UserInfo>(obj);
 
         await _userInfoRepository.InsertAsync(help);
