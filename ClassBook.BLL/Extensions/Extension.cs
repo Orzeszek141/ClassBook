@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using ClassBook.BLL.Authorization.PasswordHashers;
 using ClassBook.BLL.IServices;
 using ClassBook.BLL.Services;
 using ClassBook.BLL.Validators;
@@ -17,6 +18,7 @@ public static class Extension
         services.AddScoped<IFacultyService, FacultyService>();
         services.AddScoped<IClassService, ClassService>();
         services.AddScoped<IUserInfoService, UserInfoService>();
+        services.AddScoped<IPasswordHasher, PasswordHasher>();
 
         return services;
     }

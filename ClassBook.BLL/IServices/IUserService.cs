@@ -14,7 +14,7 @@ public interface IUserService : IGenericService<User, UserResponseDto, UserUpdat
 {
     Task<IEnumerable<UserResponseDto>> GetUsersSortedByLastNameAsync();
     Task<UserResponseDto> GetByEmail(string email);
-    Task AddStudentToClass(int studentId, int classId);
+    Task AddStudentToClass(string studentEmail, int classId);
     Task AddAsync(UserAddDto obj);
     Task<TokenDto> Login(LoginDto obj, string key);
 }

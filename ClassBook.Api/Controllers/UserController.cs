@@ -64,7 +64,7 @@ namespace ClassBook.Api.Controllers
         [HttpPost("SaveToClass/{id:int}")]
         public async Task<IActionResult> AddStudentToClass([FromRoute] int id)
         {
-            await _userService.AddStudentToClass(16, id); 
+            await _userService.AddStudentToClass("string", id); 
             return Ok();
         }
     }

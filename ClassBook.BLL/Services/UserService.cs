@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using ClassBook.BLL.Authorization;
+using ClassBook.BLL.Authorization.PasswordHashers;
 using ClassBook.BLL.DTOs;
 using ClassBook.BLL.DTOs.Request;
 using ClassBook.BLL.DTOs.Response;
@@ -18,9 +19,11 @@ namespace ClassBook.BLL.Services;
 internal class UserService : GenericService<User,UserResponseDto, UserUpdateDto>, IUserService
 {
     private readonly IUserRepository _userRepository;
-    public UserService(IGenericRepository<User> repository, IMapper mapper, IUserRepository userRepository) : base(repository, mapper)
+    private readonly IPasswordHasher _passwordHasher;
+    public UserService(IGenericRepository<User> repository, IMapper mapper, IUserRepository userRepository, IPasswordHasher passwordHasher) : base(repository, mapper)
     {
         _userRepository = userRepository;
+        _passwordHasher = passwordHasher;
     }
 
     public async Task<IEnumerable<UserResponseDto>> GetUsersSortedByLastNameAsync()
@@ -38,9 +41,9 @@ internal class UserService : GenericService<User,UserResponseDto, UserUpdateDto>
         return Mapper.Map<UserResponseDto>(user);
     }
 
-    public async Task AddStudentToClass(int studentId, int classId)
+    public async Task AddStudentToClass(string studentEmail, int classId)
     {
-        var pair = await _userRepository.GetStudentAndClass(studentId,  classId);
+        var pair = await _userRepository.GetStudentAndClass(studentEmail,  classId);
         if (pair.Item1 == null || pair.Item2 == null)
             throw new NotFoundException();
         pair.Item1.Classes.Add(pair.Item2);
@@ -51,7 +54,9 @@ internal class UserService : GenericService<User,UserResponseDto, UserUpdateDto>
     {
         if (await _userRepository.GetUserByEmail(obj.Email) != null)
             throw new EmailAlreadyTakenException(obj.Email);
+
         var help = Mapper.Map<User>(obj);
+        help.Password = _passwordHasher.HashPassword(obj.Password);
 
         await _userRepository.InsertAsync(help);
         await _userRepository.SaveAsync();
@@ -62,7 +67,7 @@ internal class UserService : GenericService<User,UserResponseDto, UserUpdateDto>
         var user = await _userRepository.GetUserByEmail(obj.Email);
         if (user == null)
             throw new NotFoundException(obj.Email);
-        else if (user.Password != obj.Password)
+        if (!_passwordHasher.VerifyPassword(obj.Password,user.Password))
             throw new WrongPasswordException();
 
         var tokenDescriptor = TokenHandler.GenerateTokenDescriptor(user,key);
