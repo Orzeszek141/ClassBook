@@ -5,7 +5,7 @@ using ClassBook.DAL.IRepositories;
 
 namespace ClassBook.BLL.Services;
 
-internal class GenericService<T, D, U> : IGenericService<T, D, U> where T : class where D : class where U : class
+public class GenericService<T, D, U> : IGenericService<T, D, U> where T : class where D : class where U : class
 {
     internal readonly IMapper Mapper;
     internal readonly IGenericRepository<T> Repository;

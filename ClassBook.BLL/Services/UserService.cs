@@ -10,7 +10,7 @@ using ClassBook.Domain.Entities;
 
 namespace ClassBook.BLL.Services;
 
-internal class UserService : GenericService<User, UserResponseDto, UserUpdateDto>, IUserService
+public class UserService : GenericService<User, UserResponseDto, UserUpdateDto>, IUserService
 {
     private readonly IPasswordHasher _passwordHasher;
     private readonly IUserRepository _userRepository;
@@ -90,4 +90,6 @@ internal class UserService : GenericService<User, UserResponseDto, UserUpdateDto
 
         return TokenGenerator.GetToken(tokenDescriptor);
     }
+
+
 }
